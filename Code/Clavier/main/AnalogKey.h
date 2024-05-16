@@ -13,12 +13,18 @@ class AnalogKey {
     AnalogKey();
     ~AnalogKey();
 
+    void SetPort(int pin);
+    void SetValue(int value);
+
+    
+    void KeyRead(); // aller voir la fonction map() de arduino
+    void KeyWrite();
 
     private:
     
-    int _buffer[BUFFER_SIZE];
-    string _port;
-    string _value;
+    int _buffer[BUFFER_SIZE] = {0};
+    int _port;
+    int _value;
     
 
 };

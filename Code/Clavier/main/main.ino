@@ -1,8 +1,11 @@
 #include <Keyboard.h>
-
+#include "AnalogKey.h"
+#include "AnalogKeyboard.h"
 
 void setup() {
   // put your setup code here, to run once:
+  AnalogKeyboard clavier;
+
 
 }
 
