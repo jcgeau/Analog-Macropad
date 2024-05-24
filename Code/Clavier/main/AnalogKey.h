@@ -1,10 +1,9 @@
 #ifndef ANALOG_KEY_H
 #define ANALOG_KEY_H
 
-#include <Keyboard.h>
-#include <string>
 
-const unsigned int BUFFER_SIZE = 5;
+#define MACRO_SIZE  10
+#define BUFFER_SIZE  5
 
 class AnalogKey {
 
@@ -19,12 +18,18 @@ class AnalogKey {
     
     void KeyRead(); // aller voir la fonction map() de arduino
     void KeyWrite();
+    void keyPrint();
+    void macroWrite();
 
     private:
     
+    char _macro[MACRO_SIZE] = {0}; 
+    int _analogValue;
     int _buffer[BUFFER_SIZE] = {0};
     int _port;
     int _value;
+    int _max;
+    int _min;
     
 
 };

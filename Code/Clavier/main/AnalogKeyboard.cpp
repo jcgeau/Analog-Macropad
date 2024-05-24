@@ -2,12 +2,10 @@
 
 AnalogKeyboard::AnalogKeyboard(){
 
-    Keyboard.begin();
 
 }
 
 AnalogKeyboard::~AnalogKeyboard(){
 
-    Keyboard.end();
 
 }

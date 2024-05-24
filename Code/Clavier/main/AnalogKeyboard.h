@@ -1,11 +1,9 @@
 #ifndef ANALOG_KEYBOARD_H
 #define ANALOG_KEYBOARD_H
 
-#include <Keyboard.h>
-#include <string>
 #include "AnalogKey.h"
 
-const unsigned int KEYBOARD_SIZE = 12;
+#define KEYBOARD_SIZE 12
 
 enum modes {
     MODE1,
@@ -26,7 +24,7 @@ class AnalogKeyboard {
     private:
     
     AnalogKey _key[KEYBOARD_SIZE];
-    unsigned uint8_t _mode[MODE_SIZE];
+    unsigned int _mode[MODE_SIZE];
 
 };
 
