@@ -19,13 +19,18 @@ class AnalogKeyboard {
 
     AnalogKeyboard();
     ~AnalogKeyboard();
-    void changeMode();
+
+    void ChangeMode();
+    void KeyboardRead();
+    void KeyboardWrite();
+    void KeyboardPrint();
 
     private:
     
     AnalogKey _key[KEYBOARD_SIZE];
+    AnalogKey _controller[4];
     unsigned int _mode[MODE_SIZE];
-
+    int _treshold
 };
 
 

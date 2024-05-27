@@ -2,7 +2,7 @@
 #define ANALOG_KEY_H
 
 
-#define MACRO_SIZE  10
+#define MACRO_SIZE  6
 #define BUFFER_SIZE  5
 
 class AnalogKey {
