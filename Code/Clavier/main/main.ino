@@ -9,7 +9,7 @@ AnalogKeyboard clavier;
 void setup() {
   // put your setup code here, to run once:
 
-  for(int i = 0; i < KEYBOARD_SIZE; i++){
+  for(int i = 0; i < ANALOG_KEYBOARD_SIZE; i++){
 
     pinMode( (A0 + i) , INPUT );
   
@@ -20,10 +20,8 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-
   clavier.KeyboardRead();
   clavier.KeyboardPrint();
 
   delay(KEYBOARD_DELAY);
-
 }

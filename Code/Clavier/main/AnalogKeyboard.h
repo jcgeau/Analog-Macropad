@@ -1,9 +1,11 @@
 #ifndef ANALOG_KEYBOARD_H
 #define ANALOG_KEYBOARD_H
 
+#include <_Teensy.h>
 #include "AnalogKey.h"
 
-#define KEYBOARD_SIZE 12
+
+#define ANALOG_KEYBOARD_SIZE 12
 #define KEY_DELAY 500
 
 enum Mode {
@@ -28,10 +30,10 @@ class AnalogKeyboard {
 
     private:
     
-    AnalogKey _key[KEYBOARD_SIZE];
+    AnalogKey _key[ANALOG_KEYBOARD_SIZE];
     AnalogKey _controller[4];
-    Mode _mode = MODE1;
-    int _treshold;
+    enum Mode _mode = MODE1;
+    unsigned int _treshold;
 };
 
 
