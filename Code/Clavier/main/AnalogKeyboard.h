@@ -4,8 +4,9 @@
 #include "AnalogKey.h"
 
 #define KEYBOARD_SIZE 12
+#define KEY_DELAY 500
 
-enum modes {
+enum Mode {
     MODE1,
     MODE2,
     MODE3,
@@ -19,18 +20,18 @@ class AnalogKeyboard {
 
     AnalogKeyboard();
     ~AnalogKeyboard();
-
+    
     void ChangeMode();
     void KeyboardRead();
-    void KeyboardWrite();
     void KeyboardPrint();
+    void KeyboardWrite();
 
     private:
     
     AnalogKey _key[KEYBOARD_SIZE];
     AnalogKey _controller[4];
-    unsigned int _mode[MODE_SIZE];
-    int _treshold
+    Mode _mode = MODE1;
+    int _treshold;
 };
 
 

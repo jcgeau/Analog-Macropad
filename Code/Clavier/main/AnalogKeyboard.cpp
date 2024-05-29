@@ -2,6 +2,9 @@
 
 AnalogKeyboard::AnalogKeyboard(){
 
+  for(int i = 0; i<KEYBOARD_SIZE; i++){
+    _key[i] = AnalogKey( (A0 + i) , ('a' + i) );
+  }
 
 }
 
@@ -18,9 +21,9 @@ void AnalogKeyboard::ChangeMode(){
 
 void AnalogKeyboard::KeyboardRead(){
 
-  for(int i = 0; i < KEYBOARS_SIZE; i++){
+  for(int i = 0; i < KEYBOARD_SIZE; i++){
 
-    _key[i].KeyRead()
+    _key[i].KeyRead();
 
   }
 
@@ -31,23 +34,28 @@ void AnalogKeyboard::KeyboardRead(){
 void AnalogKeyboard::KeyboardPrint(){
 
 
-  for(int i = 0; i < KEYBOARS_SIZE; i++){
+  for(int i = 0; i < KEYBOARD_SIZE; i++){
 
-    if(_key[i].IsPressed())
+    if(_key[i].IsPressed(_treshold)){
 
-    _key[i].KeyPrint()
+      _key[i].KeyPrint();
+      delay(KEY_DELAY);
 
+    }
   }
-
-
 
 }
 
 void AnalogKeyboard::KeyboardWrite(){
 
+  for(int i = 0; i < KEYBOARD_SIZE; i++){
 
+    if(_key[i].IsPressed(_treshold)){
 
+      _key[i].KeyWrite();
+      delay(KEY_DELAY);
 
+    }
+  }
 
-
-}
+  }

@@ -1,6 +1,6 @@
 #include "AnalogKey.h"
 
-AnalogKey::AnalogKey(){
+AnalogKey::AnalogKey(int port, int value) : _port(port), _value(value){
 
 
 
