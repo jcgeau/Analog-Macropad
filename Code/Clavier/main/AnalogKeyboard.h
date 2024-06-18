@@ -2,6 +2,8 @@
 #define ANALOG_KEYBOARD_H
 
 #include <_Teensy.h>
+#include <Arduino.h>
+
 #include "AnalogKey.h"
 
 

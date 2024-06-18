@@ -3,25 +3,30 @@
 
 #define KEYBOARD_DELAY 20
 
-AnalogKeyboard clavier;
-
+AnalogKey touche(A0, 1);
 
 void setup() {
-  // put your setup code here, to run once:
 
-  for(int i = 0; i < ANALOG_KEYBOARD_SIZE; i++){
-
-    pinMode( (A0 + i) , INPUT );
-  
-  }
+  pinMode( A0 , INPUT );
+  pinMode(13, OUTPUT);
+  Serial.begin(38400);
 
 
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  clavier.KeyboardRead();
-  clavier.KeyboardPrint();
+
+  touche.KeyRead();
+
+  if( touche.IsPressed( 100 ) ) {
+    digitalWrite(13, HIGH);
+  }else {
+    digitalWrite(13, LOW);
+  }
+
+  Serial.println( touche.GetValue() );
 
   delay(KEYBOARD_DELAY);
+
 }

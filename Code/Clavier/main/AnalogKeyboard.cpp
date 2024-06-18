@@ -1,5 +1,9 @@
 #include "AnalogKeyboard.h"
 
+/*namespace{
+  constexpr auto ANALOG_KEYBOARD_SIZE{12};
+}*/
+
 AnalogKeyboard::AnalogKeyboard(){
 
   for(int i = 0; i< ANALOG_KEYBOARD_SIZE; i++){
@@ -21,7 +25,7 @@ void AnalogKeyboard::ChangeMode(){
 
 void AnalogKeyboard::KeyboardRead(){
 
-  for(int i = 0; i < ANALOG_KEYBOARD_SIZE; i++){
+  for(auto i{0}; i < ANALOG_KEYBOARD_SIZE; i++){
 
     _key[i].KeyRead();
 

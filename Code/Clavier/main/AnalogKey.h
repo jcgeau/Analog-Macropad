@@ -4,13 +4,11 @@
 
 
 #include <_Teensy.h>
-#include "analog.c"
-
+#include <Arduino.h>
 
 #define MACRO_SIZE  6
-#define BUFFER_SIZE 5
+#define BUFFER_SIZE 3
 
-#include <Arduino.h>
 
 enum Joystick {
 
@@ -30,6 +28,7 @@ class AnalogKey {
     AnalogKey(int port, int value);
     ~AnalogKey();
 
+    const int GetValue();
     void SetPort(int pin);
     void SetValue(int value);
 
@@ -46,11 +45,11 @@ class AnalogKey {
     char _macro[MACRO_SIZE] = {0}; 
     unsigned int _analogValue;
     int _buffer[BUFFER_SIZE] = {0};
-    int _buffer_i = 0;
+    int _buffer_i{0};
     int _port;
     int _value;
-    int _max;
-    int _min;
+    int _max{470};
+    int _min{250};
     enum Joystick joystick = NO;
     
 

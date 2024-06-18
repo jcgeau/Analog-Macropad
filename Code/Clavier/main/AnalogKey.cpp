@@ -22,7 +22,7 @@ void AnalogKey::SetPort(int pin){
 
 unsigned int AnalogKey::BuffAvg(){
 
-  unsigned int avg = 0;
+  auto avg = 0u;
 
   for( int i =0 ; i<BUFFER_SIZE ; i++){
     avg += _buffer[i];
@@ -55,16 +55,21 @@ void AnalogKey::KeyWrite(){
 
 void AnalogKey::KeyPrint(){
 
-  Serial.print(_value);
+  Serial.println(_value);
 
 }
 
 bool AnalogKey::IsPressed( int treshold){
 
-  if(_analogValue > treshold){
+  if(_analogValue < treshold){
     return true;
   }
 
   return false;
+
+}
+
+const int AnalogKey::GetValue(){
+  return _analogValue;
 
 }
