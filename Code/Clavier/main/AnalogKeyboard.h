@@ -1,14 +1,16 @@
 #ifndef ANALOG_KEYBOARD_H
 #define ANALOG_KEYBOARD_H
 
+
+
 #include <_Teensy.h>
 #include <Arduino.h>
 
+#include "Constants.h"
 #include "AnalogKey.h"
 
 
-#define ANALOG_KEYBOARD_SIZE 12
-#define KEY_DELAY 500
+
 
 enum Mode {
     MODE1,
@@ -31,9 +33,9 @@ class AnalogKeyboard {
     void KeyboardWrite();
 
     private:
-    
-    AnalogKey _key[ANALOG_KEYBOARD_SIZE];
-    AnalogKey _controller[4];
+    int a = BUFFER_SIZE;
+    //AnalogKey* _key = KEYS;
+    //AnalogKey _controller[4];
     enum Mode _mode = MODE1;
     unsigned int _treshold;
 };

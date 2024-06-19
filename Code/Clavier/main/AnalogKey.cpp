@@ -1,10 +1,10 @@
 #include "AnalogKey.h"
 
-AnalogKey::AnalogKey() {};
+AnalogKey::AnalogKey() {}
 
-AnalogKey::AnalogKey(int port, int value) : _port(port), _value(value){
+AnalogKey::AnalogKey(int pin) : _pin(pin){
 
-
+  pinMode(pin, INPUT);
 
 }
 
@@ -14,11 +14,6 @@ AnalogKey::~AnalogKey(){
 
 }
 
-void AnalogKey::SetPort(int pin){
-
-  _port = pin;
-
-}
 
 unsigned int AnalogKey::BuffAvg(){
 
@@ -39,7 +34,7 @@ void AnalogKey::KeyRead(){
     _buffer_i = 0;
   }
 
-  _buffer[_buffer_i] = map(analogRead(_port), _min, _max, 0, 255);
+  _buffer[_buffer_i] = map(analogRead(_pin), _min, _max, 0, 255);
 
   _analogValue = BuffAvg();
 
@@ -59,7 +54,7 @@ void AnalogKey::KeyPrint(){
 
 }
 
-bool AnalogKey::IsPressed( int treshold){
+bool AnalogKey::IsPressed( unsigned int treshold){
 
   if(_analogValue < treshold){
     return true;
