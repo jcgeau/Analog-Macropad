@@ -1,10 +1,16 @@
 #include "AnalogKeyboard.h"
 
-/*namespace{
-  constexpr auto ANALOG_KEYBOARD_SIZE{12};
-}*/
 
 AnalogKeyboard::AnalogKeyboard(){
+
+}
+
+AnalogKeyboard::AnalogKeyboard(int dimensions): _dim(dimensions){
+
+  for(auto i{0}; i < dimensions; i++){
+    _key[i] = AnalogKey(ANALOG_PINS[i]);
+
+  }
 
 }
 
@@ -21,32 +27,26 @@ void AnalogKeyboard::ChangeMode(){
 
 void AnalogKeyboard::KeyboardRead(){
 
-  /*for(auto i{0}; i < ANALOG_KEYBOARD_SIZE; i++){
+  for(auto i{0}; i < _dim; i++){
 
     _key[i].KeyRead();
 
   }
-  */
+  
 
 
 }
 
-void AnalogKeyboard::KeyboardPrint(){
 
-
-
-}
-
-void AnalogKeyboard::KeyboardWrite(){
-  /*
-  for(int i = 0; i < ANALOG_KEYBOARD_SIZE; i++){
+void AnalogKeyboard::KeyboardPress(){
+  
+  for(auto i{0} ; i < _dim; i++){
 
     if(_key[i].IsPressed(_treshold)){
-
-      _key[i].KeyWrite();
-      delay(KEY_DELAY);
-
+      _key[i].KeyPress();
+    }else {
+      _key[i].KeyRelease();
     }
-  }*/
+  }
 
   }

@@ -42,17 +42,22 @@ void AnalogKey::KeyRead(){
 
 }
 
-void AnalogKey::KeyWrite(){
+void AnalogKey::KeyPress(){
 
-  //Keyboard.write(_value);
+  if(_pressed == 0) {
+    Keyboard.press(_value);
+    _pressed = 1;
+  }
+
+}
+
+void AnalogKey::KeyRelease(){
+
+  Keyboard.release(_value);
+  _pressed = 0;
 
 }
 
-void AnalogKey::KeyPrint(){
-
-  Serial.println(_value);
-
-}
 
 bool AnalogKey::IsPressed( unsigned int treshold){
 

@@ -25,19 +25,19 @@ class AnalogKeyboard {
     public:
 
     AnalogKeyboard();
+    AnalogKeyboard(int dimensions);
     ~AnalogKeyboard();
     
     void ChangeMode();
     void KeyboardRead();
-    void KeyboardPrint();
-    void KeyboardWrite();
+    void KeyboardPress();
 
     private:
-    int a = BUFFER_SIZE;
-    //AnalogKey* _key = KEYS;
-    //AnalogKey _controller[4];
+    
+    AnalogKey _key[MAX_ANALOG_KEYBOARD_SIZE];
+    int _dim;
     enum Mode _mode = MODE1;
-    unsigned int _treshold;
+    unsigned int _treshold{100};
 };
 
 

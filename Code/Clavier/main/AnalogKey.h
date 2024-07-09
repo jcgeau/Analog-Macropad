@@ -34,24 +34,26 @@ class AnalogKey {
 
 
     unsigned int BuffAvg();
+
     void KeyRead(); 
-    void KeyWrite();
-    void KeyPrint();
-    void MacroWrite();
+    
+    void KeyPress();
+    void KeyRelease();
+
     bool IsPressed(unsigned int treshold);
 
     private:
     
-    char _macro[MACRO_SIZE] = {0}; 
+    char _macro[MAX_MACRO_SIZE] = {0}; 
     unsigned int _analogValue;
     int _buffer[BUFFER_SIZE] = {0};
     int _buffer_i{0};
     int _pin;
-    int _value{0};
+    int _value{KEY_A};
     int _max{470};
     int _min{250};
-    enum Joystick joystick = NO;
-    
+    enum Joystick joystick{NO};
+    bool _pressed{0};
 
 };
 
