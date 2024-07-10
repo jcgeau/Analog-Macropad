@@ -29,6 +29,8 @@ class AnalogKey {
     ~AnalogKey();
 
     const int GetValue();
+    const int GetMacro();
+
     void SetPort(int pin);
     void SetValue(int value);
 
@@ -39,19 +41,18 @@ class AnalogKey {
     
     void KeyPress();
     void KeyRelease();
-
+    void SetMacro(const int (&macro)[MAX_MACRO_SIZE]);
     bool IsPressed(unsigned int treshold);
 
     private:
     
-    char _macro[MAX_MACRO_SIZE] = {0}; 
+    int _macro[MAX_MACRO_SIZE]{0}; 
     unsigned int _analogValue;
     int _buffer[BUFFER_SIZE] = {0};
     int _buffer_i{0};
     int _pin;
-    int _value{KEY_A};
-    int _max{470};
-    int _min{250};
+    int _max{580};
+    int _min{400};
     enum Joystick joystick{NO};
     bool _pressed{0};
 

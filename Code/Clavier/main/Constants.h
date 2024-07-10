@@ -20,4 +20,20 @@ constexpr int ANALOG_PINS[12] = {  A0, A1, A2, A3,
                                   A4, A5, A6, A7, 
                                   A8, A9, A10, A11 };
 
+constexpr int MACROS[MAX_ANALOG_KEYBOARD_SIZE][MAX_MACRO_SIZE] = { {MODIFIERKEY_CTRL, KEY_C, 0, 0, 0, 0},
+                                                                    {MODIFIERKEY_CTRL, KEY_V, 0, 0, 0, 0},
+                                                                    {0},
+                                                                    {0},
+                                                                    {0},
+                                                                    {0},
+                                                                    {0},
+                                                                    {0},
+                                                                    {0},
+                                                                    {0},
+                                                                    {0},
+                                                                    {0} };
+
+
+
+
 #endif

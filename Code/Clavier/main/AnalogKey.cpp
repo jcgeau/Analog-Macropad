@@ -14,6 +14,14 @@ AnalogKey::~AnalogKey(){
 
 }
 
+void AnalogKey::SetMacro(const int (&macro)[MAX_MACRO_SIZE]) {
+
+  for(auto i = 0; i < MAX_MACRO_SIZE; i++){
+    _macro[i] = macro[i];
+    Serial.println(_macro[i]);
+  }
+
+}
 
 unsigned int AnalogKey::BuffAvg(){
 
@@ -45,7 +53,9 @@ void AnalogKey::KeyRead(){
 void AnalogKey::KeyPress(){
 
   if(_pressed == 0) {
-    Keyboard.press(_value);
+    for(auto i = 0; ((_macro[i] != 0) && ( i < MAX_MACRO_SIZE)); i++ ){
+      Keyboard.press(_macro[i]);
+    }
     _pressed = 1;
   }
 
@@ -53,7 +63,10 @@ void AnalogKey::KeyPress(){
 
 void AnalogKey::KeyRelease(){
 
-  Keyboard.release(_value);
+
+  for(auto i = 0; ((_macro[i] != 0) && ( i < MAX_MACRO_SIZE)); i++ ){
+      Keyboard.release(_macro[i]);
+    }
   _pressed = 0;
 
 }
@@ -66,6 +79,11 @@ bool AnalogKey::IsPressed( unsigned int treshold){
   }
 
   return false;
+
+}
+
+const int AnalogKey::GetMacro(){
+  return {_macro[0]};
 
 }
 

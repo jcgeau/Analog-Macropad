@@ -9,8 +9,10 @@ AnalogKeyboard::AnalogKeyboard(int dimensions): _dim(dimensions){
 
   for(auto i{0}; i < dimensions; i++){
     _key[i] = AnalogKey(ANALOG_PINS[i]);
-
+    _key[i].SetMacro(MACROS[i]);
   }
+
+  
 
 }
 
