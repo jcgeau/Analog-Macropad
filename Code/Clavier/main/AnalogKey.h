@@ -8,13 +8,11 @@
 
 #include "Constants.h"
 
-
-
 enum Joystick {
 
     NO,
-    X_UPPER,
-    X_LOWER,
+    X_RIGHT,
+    X_LEFT,
     Y_UPPER,
     Y_LOWER
 
@@ -33,12 +31,13 @@ class AnalogKey {
 
     void SetPort(int pin);
     void SetValue(int value);
+    void SetJoystick(enum Joystick direction);
 
 
     unsigned int BuffAvg();
 
     void KeyRead(); 
-    
+    void MoveJoystick();    
     void KeyPress();
     void KeyRelease();
     void SetMacro(const int (&macro)[MAX_MACRO_SIZE]);
@@ -53,7 +52,7 @@ class AnalogKey {
     int _pin;
     int _max{580};
     int _min{400};
-    enum Joystick joystick{NO};
+    enum Joystick _direction{NO};
     bool _pressed{0};
 
 };

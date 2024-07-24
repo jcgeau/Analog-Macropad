@@ -10,8 +10,6 @@ AnalogKey::AnalogKey(int pin) : _pin(pin){
 
 AnalogKey::~AnalogKey(){
 
-
-
 }
 
 void AnalogKey::SetMacro(const int (&macro)[MAX_MACRO_SIZE]) {
@@ -20,6 +18,12 @@ void AnalogKey::SetMacro(const int (&macro)[MAX_MACRO_SIZE]) {
     _macro[i] = macro[i];
     Serial.println(_macro[i]);
   }
+
+}
+
+void AnalogKey::SetJoystick(enum Joystick direction){
+
+  _direction = direction;
 
 }
 
@@ -81,6 +85,34 @@ bool AnalogKey::IsPressed( unsigned int treshold){
   return false;
 
 }
+
+void AnalogKey::MoveJoystick(){
+
+  switch (_direction){
+    
+    case NO:
+      break;
+
+    case Y_UPPER:
+      Joystick.Y(map(_analogValue, 0, 255, 512, 1023));
+      break;
+
+    case Y_LOWER:
+      Joystick.Y(map(_analogValue, 0, 255, 0, 512));
+      break;
+
+    case X_RIGHT:
+      Joystick.X(map(_analogValue, 0, 255, 512, 1023));
+      break;
+
+    case X_LEFT:
+      Joystick.X(map(_analogValue, 0, 255, 0, 512));
+      break;
+
+  }
+
+}
+
 
 const int AnalogKey::GetMacro(){
   return {_macro[0]};

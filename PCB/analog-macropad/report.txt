@@ -1,0 +1,11 @@
+Plotted to 'D:\Polytechnique\E24\ELE3000 - Projet personnel\Clavier Macropad Analogique\Analog-Macropad\PCB\analog-macropad\analog-macropad-F_Cu.gtl'.
+Plotted to 'D:\Polytechnique\E24\ELE3000 - Projet personnel\Clavier Macropad Analogique\Analog-Macropad\PCB\analog-macropad\analog-macropad-B_Cu.gbl'.
+Plotted to 'D:\Polytechnique\E24\ELE3000 - Projet personnel\Clavier Macropad Analogique\Analog-Macropad\PCB\analog-macropad\analog-macropad-F_Paste.gtp'.
+Plotted to 'D:\Polytechnique\E24\ELE3000 - Projet personnel\Clavier Macropad Analogique\Analog-Macropad\PCB\analog-macropad\analog-macropad-B_Paste.gbp'.
+Plotted to 'D:\Polytechnique\E24\ELE3000 - Projet personnel\Clavier Macropad Analogique\Analog-Macropad\PCB\analog-macropad\analog-macropad-F_Silkscreen.gto'.
+Plotted to 'D:\Polytechnique\E24\ELE3000 - Projet personnel\Clavier Macropad Analogique\Analog-Macropad\PCB\analog-macropad\analog-macropad-B_Silkscreen.gbo'.
+Plotted to 'D:\Polytechnique\E24\ELE3000 - Projet personnel\Clavier Macropad Analogique\Analog-Macropad\PCB\analog-macropad\analog-macropad-F_Mask.gts'.
+Plotted to 'D:\Polytechnique\E24\ELE3000 - Projet personnel\Clavier Macropad Analogique\Analog-Macropad\PCB\analog-macropad\analog-macropad-B_Mask.gbs'.
+Plotted to 'D:\Polytechnique\E24\ELE3000 - Projet personnel\Clavier Macropad Analogique\Analog-Macropad\PCB\analog-macropad\analog-macropad-Edge_Cuts.gm1'.
+Created Gerber job file 'D:\Polytechnique\E24\ELE3000 - Projet personnel\Clavier Macropad Analogique\Analog-Macropad\PCB\analog-macropad\analog-macropad-job.gbrjob'.
+Info: Done.

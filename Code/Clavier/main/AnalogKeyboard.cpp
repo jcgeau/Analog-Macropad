@@ -12,8 +12,6 @@ AnalogKeyboard::AnalogKeyboard(int dimensions): _dim(dimensions){
     _key[i].SetMacro(MACROS[i]);
   }
 
-  
-
 }
 
 AnalogKeyboard::~AnalogKeyboard(){
@@ -21,8 +19,16 @@ AnalogKeyboard::~AnalogKeyboard(){
 
 }
 
-void AnalogKeyboard::ChangeMode(){
+void AnalogKeyboard::SetJoystick(int up, int down, int left, int right){
 
+  _key[up].SetJoystick(Y_UPPER);
+  _key[down].SetJoystick(Y_LOWER);
+  _key[left].SetJoystick(X_LEFT);
+  _key[right].SetJoystick(X_RIGHT);
+
+}
+
+void AnalogKeyboard::ChangeMode(){
 
 
 }
@@ -35,8 +41,6 @@ void AnalogKeyboard::KeyboardRead(){
 
   }
   
-
-
 }
 
 
@@ -51,4 +55,12 @@ void AnalogKeyboard::KeyboardPress(){
     }
   }
 
+}
+
+void AnalogKeyboard::MoveJoystick(){
+
+  for(auto i{0} ; i < _dim; i++){
+    _key[i].MoveJoystick();
   }
+ 
+}

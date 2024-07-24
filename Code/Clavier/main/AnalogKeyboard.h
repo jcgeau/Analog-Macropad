@@ -28,7 +28,11 @@ class AnalogKeyboard {
     AnalogKeyboard(int dimensions);
     ~AnalogKeyboard();
     
+    void SetJoystick(int up, int down, int left, int right);
+
+
     void ChangeMode();
+    void MoveJoystick();
     void KeyboardRead();
     void KeyboardPress();
 
