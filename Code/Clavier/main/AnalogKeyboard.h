@@ -5,6 +5,7 @@
 
 #include <_Teensy.h>
 #include <Arduino.h>
+#include <Encoder.h>
 
 #include "Constants.h"
 #include "AnalogKey.h"
@@ -42,6 +43,8 @@ class AnalogKeyboard {
     int _dim;
     enum Mode _mode = MODE1;
     unsigned int _treshold{100};
+    RotaryEncoder _encoder[MAX_ENCODER_SIZE];
+
 };
 
 

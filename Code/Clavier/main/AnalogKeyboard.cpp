@@ -12,10 +12,13 @@ AnalogKeyboard::AnalogKeyboard(int dimensions): _dim(dimensions){
     _key[i].SetMacro(MACROS[i]);
   }
 
+  for(auto i{0}; i < MAX_ENCODER_SIZE; i++ ){
+    _encoder[i] = Encoder(ENCODER_PINS[i][0], ENCODER_PINS[i][1], ENCODER_PINS[i][2]);
+  }
+
 }
 
 AnalogKeyboard::~AnalogKeyboard(){
-
 
 }
 
@@ -36,11 +39,13 @@ void AnalogKeyboard::ChangeMode(){
 void AnalogKeyboard::KeyboardRead(){
 
   for(auto i{0}; i < _dim; i++){
-
     _key[i].KeyRead();
-
   }
   
+  for(auto i{0}; i < MAX_ENCODER_SIZE; i++){
+    _encoder.EncoderRead();
+  }
+
 }
 
 
@@ -53,6 +58,11 @@ void AnalogKeyboard::KeyboardPress(){
     }else {
       _key[i].KeyRelease();
     }
+
+  }
+
+  for(auto i{0}; i < MAX_ENCODER_SIZE; i++){
+    _encoder.EncoderActivate();
   }
 
 }

@@ -88,6 +88,8 @@ bool AnalogKey::IsPressed( unsigned int treshold){
 
 void AnalogKey::MoveJoystick(){
 
+  if(_analogValue > _deadzone){
+
   switch (_direction){
     
     case NO:
@@ -108,6 +110,8 @@ void AnalogKey::MoveJoystick(){
     case X_LEFT:
       Joystick.X(map(_analogValue, 0, 255, 0, 512));
       break;
+
+  }
 
   }
 

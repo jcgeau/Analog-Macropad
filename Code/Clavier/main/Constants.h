@@ -3,8 +3,15 @@
 
 #include <_Teensy.h>
 #include <Arduino.h>
+#include <Encoder.h>
 
+constexpr int MAX_ENCODER_SIZE{2};
 
+constexpr int ENCODER_PINS[MAX_ENCODER_SIZE][3] { { 0, 1, 2 },
+                                                  { 3, 4, 5 }};
+
+constexpr int ENCODER_COMMAND[MAX_ENCODER_SIZE][3]{ { KEY_MEDIA_VOLUME_INC , KEY_MEDIA_VOLUME_DEC , KEY_MEDIA_MUTE },
+                                                    { KEY_MEDIA_FAST_FORWARD , KEY_MEDIA_REWIND , KEY_MEDIA_PAUSE }};
 
 constexpr int MAX_ANALOG_KEYBOARD_SIZE{12};
 

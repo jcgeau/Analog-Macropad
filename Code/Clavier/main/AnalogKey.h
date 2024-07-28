@@ -54,6 +54,7 @@ class AnalogKey {
     int _min{400};
     enum Joystick _direction{NO};
     bool _pressed{0};
+    int _deadzone{20};
 
 };
 
