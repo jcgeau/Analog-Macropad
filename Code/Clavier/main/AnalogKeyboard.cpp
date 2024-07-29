@@ -13,7 +13,7 @@ AnalogKeyboard::AnalogKeyboard(int dimensions): _dim(dimensions){
   }
 
   for(auto i{0}; i < MAX_ENCODER_SIZE; i++ ){
-    _encoder[i] = Encoder(ENCODER_PINS[i][0], ENCODER_PINS[i][1], ENCODER_PINS[i][2]);
+    _encoder[i].SetPins(ENCODER_PINS[i][0], ENCODER_PINS[i][1], ENCODER_PINS[i][2]);
   }
 
 }
@@ -43,11 +43,10 @@ void AnalogKeyboard::KeyboardRead(){
   }
   
   for(auto i{0}; i < MAX_ENCODER_SIZE; i++){
-    _encoder.EncoderRead();
+    _encoder[i].EncoderRead();
   }
 
 }
-
 
 void AnalogKeyboard::KeyboardPress(){
   
@@ -62,7 +61,7 @@ void AnalogKeyboard::KeyboardPress(){
   }
 
   for(auto i{0}; i < MAX_ENCODER_SIZE; i++){
-    _encoder.EncoderActivate();
+    _encoder[i].EncoderActivate();
   }
 
 }

@@ -9,6 +9,8 @@
 
 #include "Constants.h"
 #include "AnalogKey.h"
+#include "RotaryEncoder.h"
+
 
 
 

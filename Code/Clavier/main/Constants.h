@@ -4,7 +4,10 @@
 #include <_Teensy.h>
 #include <Arduino.h>
 #include <Encoder.h>
+#include <ST7735_t3.h>
 
+
+// Constants needed for the rotary encoders
 constexpr int MAX_ENCODER_SIZE{2};
 
 constexpr int ENCODER_PINS[MAX_ENCODER_SIZE][3] { { 0, 1, 2 },
@@ -13,6 +16,20 @@ constexpr int ENCODER_PINS[MAX_ENCODER_SIZE][3] { { 0, 1, 2 },
 constexpr int ENCODER_COMMAND[MAX_ENCODER_SIZE][3]{ { KEY_MEDIA_VOLUME_INC , KEY_MEDIA_VOLUME_DEC , KEY_MEDIA_MUTE },
                                                     { KEY_MEDIA_FAST_FORWARD , KEY_MEDIA_REWIND , KEY_MEDIA_PAUSE }};
 
+
+// Constants need for the Screen
+constexpr int RST{8};
+
+constexpr int CS{9};
+
+constexpr int DC{10};
+
+constexpr int SCK{13};
+
+constexpr int MOSI{11};
+
+
+// Constants needed for the analog keys
 constexpr int MAX_ANALOG_KEYBOARD_SIZE{12};
 
 constexpr int MAX_MACRO_SIZE{6};
