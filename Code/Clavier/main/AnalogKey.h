@@ -43,6 +43,8 @@ class AnalogKey {
     void SetMacro(const int (&macro)[MAX_MACRO_SIZE]);
     bool IsPressed(unsigned int treshold);
 
+    void Test();
+
     private:
     
     int _macro[MAX_MACRO_SIZE]{0}; 

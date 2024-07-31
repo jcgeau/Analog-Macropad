@@ -18,15 +18,15 @@ constexpr int ENCODER_COMMAND[MAX_ENCODER_SIZE][3]{ { KEY_MEDIA_VOLUME_INC , KEY
 
 
 // Constants need for the Screen
-constexpr int RST{8};
+constexpr int SCREEN_RST{8};
 
-constexpr int CS{9};
+constexpr int SCREEN_DC{9};
 
-constexpr int DC{10};
+constexpr int SCREEN_CS{10};
 
-constexpr int SCK{13};
+constexpr int SCREEN_SCK{13};
 
-constexpr int MOSI{11};
+constexpr int SCREEN_MOSI{11};
 
 
 // Constants needed for the analog keys

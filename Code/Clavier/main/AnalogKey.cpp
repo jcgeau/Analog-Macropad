@@ -127,3 +127,12 @@ const int AnalogKey::GetValue(){
   return _analogValue;
 
 }
+
+void AnalogKey::Test(){
+
+  Serial.println(analogRead(_pin));
+  //this->KeyRead();
+  //Serial.println(key.GetValue());
+
+
+}

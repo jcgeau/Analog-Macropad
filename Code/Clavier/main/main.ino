@@ -2,27 +2,32 @@
 #include "Constants.h"
 #include "AnalogKey.h"
 #include "AnalogKeyboard.h"
+#include "Screen.h"
+#include "RotaryEncoder.h"
 
-AnalogKeyboard clavier(2);
 
-//AnalogKey key(A0);
+//AnalogKeyboard clavier(2);
+AnalogKey key(A0);
+
+Screen ecran;
+
 
 void setup() {
   
   //key.SetMacro(MACROS[0]);
-  pinMode(13, OUTPUT);
+  //pinMode(13, OUTPUT);
   Serial.begin(38400);
-
+  
+  
 }
 
 void loop() {
 
-  clavier.KeyboardRead();
-  clavier.KeyboardPress();
-  //key.KeyRead();
-  //Serial.println(analogRead(A0));
-  //Serial.println(key.GetValue());
-  //Serial.println(key.GetMacro());
+  //ecran.OptionsTest();  
+  key.Test();
+  delay(50);
+  //clavier.KeyboardRead();
+  //clavier.KeyboardPress();
 
   /*
   if(key.IsPressed(100)){
@@ -34,6 +39,6 @@ void loop() {
     }
   */
   
-  delay(KEYBOARD_DELAY);
+  //delay(KEYBOARD_DELAY);
 
 }
