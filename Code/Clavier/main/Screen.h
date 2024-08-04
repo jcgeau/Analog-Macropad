@@ -34,6 +34,8 @@ class Screen {
     Screen();
     ~Screen();
 
+    enum Options GetOptions();
+
     void Options(const char *title, const char *option1, const char *option2, const char *option3, uint16_t color );
     void OptionsRectangle();
     void OptionUp();
@@ -41,10 +43,12 @@ class Screen {
 
     void OptionsTest();
 
-    void Modify(const char *title, uint16_t color);
+    void Modify(const char *title, uint16_t color, uint8_t val);
     void ModifyRectangle(uint8_t val);
     
     void ModifyTest();
+
+    void Idle(const char* title, uint16_t color);
 
     private:
 

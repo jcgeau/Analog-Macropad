@@ -29,8 +29,14 @@ class RotaryEncoder {
     void SetSwitch(int sw);
 
     void EncoderRead();
-    const void EncoderWrte(int direction);
+    const void EncoderWrite(int direction);
     void EncoderActivate();
+    void ResetPos();
+    
+    
+    bool IsPressed();
+    bool Clockwise();
+    bool CntrClockwise();
 
     private:
 

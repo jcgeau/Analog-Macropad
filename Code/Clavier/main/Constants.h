@@ -57,7 +57,7 @@ constexpr int MACROS[MAX_ANALOG_KEYBOARD_SIZE][MAX_MACRO_SIZE] = { {MODIFIERKEY_
                                                                     {0},
                                                                     {0} };
 
-
+constexpr int INCREMENT{4};
 
 
 #endif

@@ -7,9 +7,11 @@
 
 
 //AnalogKeyboard clavier(2);
-AnalogKey key(A0);
+//AnalogKey key(A0);
 
 Screen ecran;
+
+//AnalogKeyboard clavier(3);
 
 
 void setup() {
@@ -17,17 +19,15 @@ void setup() {
   //key.SetMacro(MACROS[0]);
   //pinMode(13, OUTPUT);
   Serial.begin(38400);
-  
+  ecran.Idle("Macropad V01", CYAN); 
   
 }
 
 void loop() {
 
-  //ecran.OptionsTest();  
-  key.Test();
-  delay(50);
-  //clavier.KeyboardRead();
-  //clavier.KeyboardPress();
+
+  
+  //clavier.Run();
 
   /*
   if(key.IsPressed(100)){
@@ -39,6 +39,5 @@ void loop() {
     }
   */
   
-  //delay(KEYBOARD_DELAY);
 
 }

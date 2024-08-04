@@ -1,3 +1,4 @@
+#include "core_pins.h"
 #include "RotaryEncoder.h"
 
 RotaryEncoder::RotaryEncoder(){}
@@ -41,20 +42,17 @@ void RotaryEncoder::EncoderRead(){
 
 void RotaryEncoder::EncoderActivate(){
 
-  if(_newPosition >= 4){
-    EncoderWrte(CLOCKWISE);
-    _newPosition = 0;
-    _oldPosition = 0;
+  if(this->Clockwise()){
+    EncoderWrite(CLOCKWISE);
 
-  }else if (_newPosition <= -4) {
-    EncoderWrte(CNTR_CLOCKWISE);
-    _newPosition = 0;
-    _oldPosition = 0;
+  }else if (this->CntrClockwise()) {
+    EncoderWrite(CNTR_CLOCKWISE);
+
   }
 
 }
 
-const void RotaryEncoder::EncoderWrte(int direction){
+const void RotaryEncoder::EncoderWrite(int direction){
 
   switch(direction){
 
@@ -69,5 +67,45 @@ const void RotaryEncoder::EncoderWrte(int direction){
       break;
 
   }
+
+}
+
+bool RotaryEncoder::IsPressed(){
+
+  if(digitalRead(_switchPin) == LOW){
+    return true;
+  }
+
+  return false;
+
+}
+
+bool RotaryEncoder::Clockwise(){
+
+  if(_newPosition >= 4){
+    this->ResetPos();
+    return true;
+  }
+
+  return false;
+
+}
+
+bool RotaryEncoder::CntrClockwise(){
+
+  if(_newPosition <= -4){
+    this->ResetPos();
+    return true;
+  }
+
+  return false;
+
+}
+
+void RotaryEncoder::ResetPos(){
+
+  _newPosition = 0;
+  _oldPosition = 0;
+
 
 }
