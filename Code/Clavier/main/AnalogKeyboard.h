@@ -12,10 +12,6 @@
 #include "RotaryEncoder.h"
 #include "Screen.h"
 
-//Encoder ENC1 = Encoder(2,1);
-//Encoder ENC2 = Encoder(5,4);
-Encoder ENCODERS[MAX_ENCODER_SIZE]{Encoder(2,1), Encoder(5,4)};
-
 enum State{
   NORMAL,
   OPTIONS,
@@ -53,7 +49,7 @@ class AnalogKeyboard {
     void MenuState();
     
     void IncrementSetting(bool dir, const char* setting);
-    void IncrementVariable(int variable, int increment, int min, int max);
+    void IncrementVariable(unsigned int& variable, int increment, int min, int max);
 
     const unsigned int GetThreshold();
     const unsigned int GetDeadzone();
@@ -81,7 +77,7 @@ class AnalogKeyboard {
     unsigned int _threshold{100};
     unsigned int _deadzone{20};
 
-    RotaryEncoder _encoder[MAX_ENCODER_SIZE];
+    RotaryEncoder _encoder[MAX_ENCODER_SIZE] = {RotaryEncoder(0), RotaryEncoder(3)};
     Screen _screen;
 
 };

@@ -1,5 +1,7 @@
 #include "AnalogKeyboard.h"
 
+Encoder ENCODERS[MAX_ENCODER_SIZE]{Encoder(2,1), Encoder(5,4)};
+
 AnalogKeyboard::AnalogKeyboard(int dimensions = 0): _dim(dimensions){
 
   for(auto i{0}; i < dimensions; i++){
@@ -9,6 +11,7 @@ AnalogKeyboard::AnalogKeyboard(int dimensions = 0): _dim(dimensions){
 
   for(auto i{0}; i < MAX_ENCODER_SIZE; i++ ){
     _encoder[i].SetPins(ENCODER_PINS[i]);
+    _encoder[i].SetCommand(ENCODER_COMMAND[i]);
   }
 
   _screen.Idle("Macropad V01", CYAN);
@@ -51,18 +54,18 @@ void AnalogKeyboard::OptionsMenu(){
   this->ChangeState(OPTIONS);
 
   _screen.Options("Options", "Mode", "Threshold", "Deadzone", CYAN);
-  delay(1000);
+  delay(MENU_DELAY);
 
   while(this->GetState() == OPTIONS){
 
     _encoder[0].EncoderRead(ENCODERS[0]);
 
-    if(_encoder[0].Clockwise()){
+    if(_encoder[0].Clockwise(ENCODERS[0])){
       _screen.OptionUp();
       _screen.Options("Options", "Mode", "Threshold", "Deadzone", CYAN);
     }
 
-    if(_encoder[0].CntrClockwise()){
+    if(_encoder[0].CntrClockwise(ENCODERS[0])){
       _screen.OptionDown();
       _screen.Options("Options", "Mode", "Threshold", "Deadzone", CYAN);
     }
@@ -79,17 +82,18 @@ void AnalogKeyboard::ChooseModeMenu(){
   if(this->GetState() == CHOOSE_MODE){
 
     _screen.Options("Choose Mode", "Mode1", "Mode1", "Mode1", RED);
+    delay(MENU_DELAY);
 
     while(this->GetState() == CHOOSE_MODE){
 
     _encoder[0].EncoderRead(ENCODERS[0]);
 
-    if(_encoder[0].Clockwise()){
+    if(_encoder[0].Clockwise(ENCODERS[0])){
       _screen.OptionUp();
       _screen.Options("Choose Mode", "Mode1", "Mode1", "Mode1", RED);
     }
 
-    if(_encoder[0].CntrClockwise()){
+    if(_encoder[0].CntrClockwise(ENCODERS[0])){
       _screen.OptionDown();
       _screen.Options("Choose Mode", "Mode1", "Mode1", "Mode1", RED);
     }
@@ -111,18 +115,18 @@ void AnalogKeyboard::ThresholdMenu(){
 
       _encoder[0].EncoderRead(ENCODERS[0]);
 
-      if(_encoder[0].Clockwise()){
+      if(_encoder[0].Clockwise(ENCODERS[0])){
         this->IncrementSetting(true, "Threshold");
         _screen.Modify("Threshold", BLUE, this->GetThreshold());
       }
 
-      if(_encoder[0].CntrClockwise()){
+      if(_encoder[0].CntrClockwise(ENCODERS[0])){
         this->IncrementSetting(false, "Threshold");          
         _screen.Modify("Threshold", BLUE, this->GetThreshold());
       }
       
       this->MenuExit();
-      
+
     }
 
   }
@@ -138,12 +142,12 @@ void AnalogKeyboard::DeadzoneMenu(){
 
       _encoder[0].EncoderRead(ENCODERS[0]);
 
-      if(_encoder[0].Clockwise()){
+      if(_encoder[0].Clockwise(ENCODERS[0])){
         this->IncrementSetting(true, "Deadzone");
         _screen.Modify("Deadzone", BLUE, this->GetDeadzone());
       }
 
-      if(_encoder[0].CntrClockwise()){
+      if(_encoder[0].CntrClockwise(ENCODERS[0])){
         this->IncrementSetting(false, "Deadzone");          
         _screen.Modify("Deadzone", BLUE, this->GetDeadzone());
       }
@@ -175,7 +179,9 @@ void AnalogKeyboard::MenuMode(){
 
     }
       
+    this->ChangeState(NORMAL);
     _screen.Idle("Macropad V01", CYAN);
+    delay(MENU_DELAY);
 
   }
 
@@ -199,8 +205,6 @@ void AnalogKeyboard::MenuState(){
       break;
 
     }
-
-    _screen.Idle("Macropad V01", CYAN);
 
   }
 
@@ -247,7 +251,7 @@ void AnalogKeyboard::IncrementSetting(bool dir, const char* setting){
 
 }
 
-void AnalogKeyboard::IncrementVariable(int variable, int increment, int min, int max){
+void AnalogKeyboard::IncrementVariable(unsigned int& variable, int increment, int min, int max){
 
   if( ( ( variable + increment ) >= min ) && ( ( variable + increment ) <= max ) ){
     variable += increment;
@@ -325,7 +329,7 @@ void AnalogKeyboard::KeyboardPress(){
   }
 
   for(auto i{0}; i < MAX_ENCODER_SIZE; i++){
-    _encoder[i].EncoderActivate();
+    _encoder[i].EncoderActivate(ENCODERS[i]);
   }
 
 }

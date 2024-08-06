@@ -1,6 +1,11 @@
 #include "RotaryEncoder.h"
 
-RotaryEncoder::RotaryEncoder(){}
+RotaryEncoder::RotaryEncoder(int sw){
+
+  _switchPin = sw;
+  pinMode(sw, INPUT_PULLUP);
+
+}
 
 
 RotaryEncoder::~RotaryEncoder(){}
@@ -26,25 +31,25 @@ void RotaryEncoder::SetSwitch(int sw){
 
 }
 
-void RotaryEncoder::EncoderRead(Encoder enc){
+void RotaryEncoder::EncoderRead(Encoder& enc){
 
-    _newPosition = enc.read();
+  _newPosition = enc.read();
 
-    if (_newPosition != _oldPosition) {
-     _oldPosition = _newPosition;
-      Serial.println(_newPosition);
-    }
+  if (_newPosition != _oldPosition) {
+   _oldPosition = _newPosition;
+  }
+
+  
 
 }
 
-void RotaryEncoder::EncoderActivate(){
+void RotaryEncoder::EncoderActivate(Encoder& enc){
 
-  if(this->Clockwise()){
+  if(this->Clockwise(enc)){
     EncoderWrite(CLOCKWISE);
 
-  }else if (this->CntrClockwise()) {
+  }else if (this->CntrClockwise(enc)) {
     EncoderWrite(CNTR_CLOCKWISE);
-
   }
 
 }
@@ -56,11 +61,13 @@ const void RotaryEncoder::EncoderWrite(int direction){
     case CLOCKWISE:
       Keyboard.press(_command[CLOCKWISE]);
       Keyboard.release(_command[CLOCKWISE]);
+      Serial.println(_command[CLOCKWISE]);
       break;
 
     case CNTR_CLOCKWISE:
       Keyboard.press(_command[CNTR_CLOCKWISE]);
       Keyboard.release(_command[CNTR_CLOCKWISE]);
+      Serial.println(_command[CNTR_CLOCKWISE]);
       break;
 
   }
@@ -77,10 +84,10 @@ bool RotaryEncoder::IsPressed(){
 
 }
 
-bool RotaryEncoder::Clockwise(){
+bool RotaryEncoder::Clockwise(Encoder& enc){
 
   if(_newPosition >= 4){
-    this->ResetPos();
+    this->ResetPos(enc);
     return true;
   }
 
@@ -88,10 +95,10 @@ bool RotaryEncoder::Clockwise(){
 
 }
 
-bool RotaryEncoder::CntrClockwise(){
+bool RotaryEncoder::CntrClockwise(Encoder& enc){
 
   if(_newPosition <= -4){
-    this->ResetPos();
+    this->ResetPos(enc);
     return true;
   }
 
@@ -99,28 +106,27 @@ bool RotaryEncoder::CntrClockwise(){
 
 }
 
-void RotaryEncoder::ResetPos(){
+void RotaryEncoder::ResetPos(Encoder& enc){
 
+  enc.write(0);
   _newPosition = 0;
   _oldPosition = 0;
 
 
 }
 
-void RotaryEncoder::Test(int *test, Encoder enc){
+void RotaryEncoder::Test(Encoder& enc){
 
   this->EncoderRead(enc);
-  Serial.println(_newPosition);
+  //Serial.println(_newPosition);
 
 
-  if(this->Clockwise()){
-    *test += 1;
-    Serial.println(*test);
+  if(this->Clockwise(enc)){
+    Serial.println("+1");
   }
 
-  if(this->Clockwise()){
-    *test -= 1;
-    Serial.println(*test);
+  if(this->CntrClockwise(enc)){
+    Serial.println("-1");
   }
 
 }

@@ -21,7 +21,7 @@ class RotaryEncoder {
 
     public:
 
-    RotaryEncoder();
+    RotaryEncoder(int sw);
     ~RotaryEncoder();
 
 
@@ -29,23 +29,24 @@ class RotaryEncoder {
     void SetCommand(const int (&command)[DIRECTIONS]);
     void SetSwitch(int sw);
 
-    void EncoderRead(Encoder enc);
+    void EncoderRead(Encoder& enc);
     const void EncoderWrite(int direction);
-    void EncoderActivate();
-    void ResetPos();
+    void EncoderActivate(Encoder& enc);
+    void ResetPos(Encoder& enc);
     
     
     bool IsPressed();
-    bool Clockwise();
-    bool CntrClockwise();
+    bool Clockwise(Encoder& enc);
+    bool CntrClockwise(Encoder& enc);
 
-    void Test(int *test, Encoder enc);
+    void Test(Encoder& enc);
 
     private:
 
     int _switchPin;
     int _switch;
 
+    long _state{0};
     long _newPosition{0};
     long _oldPosition{0};
     int _command[DIRECTIONS];

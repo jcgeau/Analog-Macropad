@@ -52,8 +52,8 @@ class AnalogKey {
     int _buffer[BUFFER_SIZE] = {0};
     int _buffer_i{0};
     int _pin;
-    int _max{580};
-    int _min{400};
+    int _max{310};
+    int _min{150};
     enum Joystick _direction{NO};
     bool _pressed{0};
     unsigned int _deadzone{20};
