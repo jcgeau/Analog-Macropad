@@ -1,4 +1,3 @@
-#include "core_pins.h"
 #include "RotaryEncoder.h"
 
 RotaryEncoder::RotaryEncoder(){}
@@ -6,12 +5,10 @@ RotaryEncoder::RotaryEncoder(){}
 
 RotaryEncoder::~RotaryEncoder(){}
 
-void RotaryEncoder::SetPins(int sw, int clk, int dt){
+void RotaryEncoder::SetPins(int sw){
 
   _switchPin = sw;
   pinMode(sw, INPUT_PULLUP);
-
-  _encoder = Encoder(dt, clk);
 
 }
 
@@ -29,9 +26,9 @@ void RotaryEncoder::SetSwitch(int sw){
 
 }
 
-void RotaryEncoder::EncoderRead(){
+void RotaryEncoder::EncoderRead(Encoder enc){
 
-    _newPosition = _encoder.read();
+    _newPosition = enc.read();
 
     if (_newPosition != _oldPosition) {
      _oldPosition = _newPosition;
@@ -107,5 +104,23 @@ void RotaryEncoder::ResetPos(){
   _newPosition = 0;
   _oldPosition = 0;
 
+
+}
+
+void RotaryEncoder::Test(int *test, Encoder enc){
+
+  this->EncoderRead(enc);
+  Serial.println(_newPosition);
+
+
+  if(this->Clockwise()){
+    *test += 1;
+    Serial.println(*test);
+  }
+
+  if(this->Clockwise()){
+    *test -= 1;
+    Serial.println(*test);
+  }
 
 }

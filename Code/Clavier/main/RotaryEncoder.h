@@ -24,11 +24,12 @@ class RotaryEncoder {
     RotaryEncoder();
     ~RotaryEncoder();
 
-    void SetPins(int sw, int clk, int dt);
+
+    void SetPins(int sw);
     void SetCommand(const int (&command)[DIRECTIONS]);
     void SetSwitch(int sw);
 
-    void EncoderRead();
+    void EncoderRead(Encoder enc);
     const void EncoderWrite(int direction);
     void EncoderActivate();
     void ResetPos();
@@ -38,17 +39,17 @@ class RotaryEncoder {
     bool Clockwise();
     bool CntrClockwise();
 
+    void Test(int *test, Encoder enc);
+
     private:
 
     int _switchPin;
     int _switch;
 
-    Encoder _encoder = Encoder(0,0);
     long _newPosition{0};
     long _oldPosition{0};
     int _command[DIRECTIONS];
 
 };
-
 
 #endif

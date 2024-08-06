@@ -7,11 +7,11 @@
 #include <ST7735_t3.h>
 
 
+
 // Constants needed for the rotary encoders
 constexpr int MAX_ENCODER_SIZE{2};
 
-constexpr int ENCODER_PINS[MAX_ENCODER_SIZE][3] { { 0, 1, 2 },
-                                                  { 3, 4, 5 }};
+constexpr int ENCODER_PINS[MAX_ENCODER_SIZE] { 0, 3};
 
 constexpr int ENCODER_COMMAND[MAX_ENCODER_SIZE][3]{ { KEY_MEDIA_VOLUME_INC , KEY_MEDIA_VOLUME_DEC , KEY_MEDIA_MUTE },
                                                     { KEY_MEDIA_FAST_FORWARD , KEY_MEDIA_REWIND , KEY_MEDIA_PAUSE }};
@@ -58,6 +58,5 @@ constexpr int MACROS[MAX_ANALOG_KEYBOARD_SIZE][MAX_MACRO_SIZE] = { {MODIFIERKEY_
                                                                     {0} };
 
 constexpr int INCREMENT{4};
-
 
 #endif
