@@ -1,3 +1,13 @@
+/**
+ * @file AnalogKeyboard.cpp
+ * @author Jean-Christophe Gauthier (jean-christophe.gauthier@polymtl.ca)
+ * @brief Implementation of the AnalogKeyboard class
+ * @version 0.1
+ * @date 2024-08-08
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include "AnalogKeyboard.h"
 
 Encoder ENCODERS[MAX_ENCODER_SIZE]{Encoder(2,1), Encoder(5,4)};
@@ -22,6 +32,7 @@ AnalogKeyboard::~AnalogKeyboard(){
 
 }
 
+
 void AnalogKeyboard::Run(){
   
  // Read de tous les touches et encodeurs 
@@ -33,6 +44,103 @@ void AnalogKeyboard::Run(){
 
 }
 
+const unsigned int AnalogKeyboard::GetThreshold(){
+
+  return _threshold;
+
+}
+
+const unsigned int AnalogKeyboard::GetDeadzone(){
+
+  return _deadzone;
+
+}
+
+const enum State AnalogKeyboard::GetState(){
+
+  return _state;
+
+}
+
+const enum Mode AnalogKeyboard::GetMode(){
+
+  return _mode;
+
+}
+
+
+
+void AnalogKeyboard::ChangeState(enum State s){
+
+  _state = s;
+
+}
+
+void AnalogKeyboard::ChangeMode(enum Mode m){
+
+  _mode = m;
+
+}
+
+/// @brief Set a Key to be a joystick direction
+/// @param all Index of the key in the _key array
+void AnalogKeyboard::SetJoystick(int up, int down, int left, int right){
+
+  _key[up].SetJoystick(Y_UPPER);
+  _key[down].SetJoystick(Y_LOWER);
+  _key[left].SetJoystick(X_LEFT);
+  _key[right].SetJoystick(X_RIGHT);
+
+}
+
+/// @brief Increments or decrements an attribute, meant to be used with a rotary encoder hence the param direction 
+/// @param direction Dictates whether to increment or decrement the setting  
+/// @param setting A string to specify which attribute to modify
+void AnalogKeyboard::IncrementSetting(bool direction, const char* setting){
+
+  if(setting == "Threshold"){
+    switch(direction){
+      case 1:
+      this->IncrementVariable(_threshold, INCREMENT, 0, 255);
+      break;
+
+      case 0:
+      this->IncrementVariable(_threshold, -1*INCREMENT, 0, 255);
+      break;
+
+    }
+
+  }
+
+
+  if(setting == "Deadzone"){
+    switch(direction){
+      case 1:
+      this->IncrementVariable(_deadzone, INCREMENT, 0, 255);
+      break;
+
+      case 0:
+      this->IncrementVariable(_deadzone, -1*INCREMENT, 0, 255);
+      break;
+
+    }
+  }
+
+}
+
+/// @brief Increments or decrement a variable in a specified range
+/// @param increment  By how much we want to increment or decrement the value
+/// @param min The minimum value the variable must not be lower than 
+/// @param max The maximum value the variable must not be higher than
+void AnalogKeyboard::IncrementVariable(unsigned int& variable, int increment, int min, int max){
+
+  if( ( ( variable + increment ) >= min ) && ( ( variable + increment ) <= max ) ){
+    variable += increment;
+  }
+
+}
+
+/// @brief Handles every menu interaction with the GUI
 void AnalogKeyboard::Menu(){
 
   if(_encoder[0].IsPressed()){
@@ -49,6 +157,7 @@ void AnalogKeyboard::Menu(){
 
 }
 
+/// @brief Handles the interactions for the main options menu
 void AnalogKeyboard::OptionsMenu(){
 
   this->ChangeState(OPTIONS);
@@ -77,6 +186,7 @@ void AnalogKeyboard::OptionsMenu(){
 
 }
 
+/// @brief Handles the interactions for the choose mode menu
 void AnalogKeyboard::ChooseModeMenu(){
 
   if(this->GetState() == CHOOSE_MODE){
@@ -106,6 +216,7 @@ void AnalogKeyboard::ChooseModeMenu(){
 
 }
 
+/// @brief Handles the interactions with the choosing the threshold menu
 void AnalogKeyboard::ThresholdMenu(){
 
   if(this->GetState() == CHOOSE_THRESHOLD){
@@ -133,6 +244,7 @@ void AnalogKeyboard::ThresholdMenu(){
 
 }
 
+/// @brief Handles the interactions with the choosing the deadzone menu
 void AnalogKeyboard::DeadzoneMenu(){
 
   if(this->GetState() == CHOOSE_DEADZONE){
@@ -160,6 +272,7 @@ void AnalogKeyboard::DeadzoneMenu(){
 
 }
 
+/// @brief Links a selection made on the GUI and changes the mode of the keyboard following that selection
 void AnalogKeyboard::MenuMode(){
 
   if(_encoder[0].IsPressed()){
@@ -187,6 +300,7 @@ void AnalogKeyboard::MenuMode(){
 
 }
 
+/// @brief Links a selection made on the GUI and changes the state of the keyboard following that selection
 void AnalogKeyboard::MenuState(){
 
   if(_encoder[0].IsPressed()){
@@ -210,6 +324,7 @@ void AnalogKeyboard::MenuState(){
 
 }
 
+/// @brief Exits the menu to be back to normal fonctionning state
 void AnalogKeyboard::MenuExit(){
 
   if(_encoder[1].IsPressed()){
@@ -219,91 +334,7 @@ void AnalogKeyboard::MenuExit(){
 
 }
 
-void AnalogKeyboard::IncrementSetting(bool dir, const char* setting){
-
-  if(setting == "Threshold"){
-    switch(dir){
-      case true:
-      this->IncrementVariable(_threshold, INCREMENT, 0, 255);
-      break;
-
-      case false:
-      this->IncrementVariable(_threshold, -1*INCREMENT, 0, 255);
-      break;
-
-    }
-
-  }
-
-
-  if(setting == "Deadzone"){
-    switch(dir){
-      case true:
-      this->IncrementVariable(_deadzone, INCREMENT, 0, 255);
-      break;
-
-      case false:
-      this->IncrementVariable(_deadzone, -1*INCREMENT, 0, 255);
-      break;
-
-    }
-  }
-
-}
-
-void AnalogKeyboard::IncrementVariable(unsigned int& variable, int increment, int min, int max){
-
-  if( ( ( variable + increment ) >= min ) && ( ( variable + increment ) <= max ) ){
-    variable += increment;
-  }
-
-}
-
-const unsigned int AnalogKeyboard::GetThreshold(){
-
-  return _threshold;
-
-}
-
-const unsigned int AnalogKeyboard::GetDeadzone(){
-
-  return _deadzone;
-
-}
-
-void AnalogKeyboard::SetJoystick(int up, int down, int left, int right){
-
-  _key[up].SetJoystick(Y_UPPER);
-  _key[down].SetJoystick(Y_LOWER);
-  _key[left].SetJoystick(X_LEFT);
-  _key[right].SetJoystick(X_RIGHT);
-
-}
-
-void AnalogKeyboard::ChangeState(enum State s){
-
-  _state = s;
-
-}
-
-const enum State AnalogKeyboard::GetState(){
-
-  return _state;
-
-}
-
-void AnalogKeyboard::ChangeMode(enum Mode m){
-
-  _mode = m;
-
-}
-
-const enum Mode AnalogKeyboard::GetMode(){
-
-  return _mode;
-
-}
-
+/// @brief Reads every AnalogKey and RotaryEncoder on the keyboard
 void AnalogKeyboard::KeyboardRead(){
 
   for(auto i{0}; i < _dim; i++){
@@ -316,6 +347,7 @@ void AnalogKeyboard::KeyboardRead(){
 
 }
 
+/// @brief Activate every AnalogKey and RotaryEncoder if any whas activated
 void AnalogKeyboard::KeyboardPress(){
   
   for(auto i{0} ; i < _dim; i++){
@@ -334,6 +366,7 @@ void AnalogKeyboard::KeyboardPress(){
 
 }
 
+/// @brief Moves the stick if a key is activated
 void AnalogKeyboard::MoveJoystick(){
 
   for(auto i{0} ; i < _dim; i++){

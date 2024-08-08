@@ -1,3 +1,13 @@
+/**
+ * @file RotaryEncoder.h
+ * @author Jean-Christophe Gauthier (jean-christophe.gauthier@polymtl.ca)
+ * @brief Implements the RotaryEncoder class
+ * @version 0.1
+ * @date 2024-08-08
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include "RotaryEncoder.h"
 
 RotaryEncoder::RotaryEncoder(int sw){
@@ -31,6 +41,16 @@ void RotaryEncoder::SetSwitch(int sw){
 
 }
 
+void RotaryEncoder::ResetPos(Encoder& enc){
+
+  enc.write(0);
+  _newPosition = 0;
+  _oldPosition = 0;
+
+}
+
+/// @brief Detects if and in what direction the encoder is rotated and updates the position
+/// @param enc Encoder from the Encoder.h library
 void RotaryEncoder::EncoderRead(Encoder& enc){
 
   _newPosition = enc.read();
@@ -39,10 +59,30 @@ void RotaryEncoder::EncoderRead(Encoder& enc){
    _oldPosition = _newPosition;
   }
 
-  
+}
+
+/// @brief Presses and releases a key from the _comand array, the direction of the rotation
+/// @param direction 
+const void RotaryEncoder::EncoderWrite(enum Direction direction){
+
+  switch(direction){
+
+    case CLOCKWISE:
+      Keyboard.press(_command[CLOCKWISE]);
+      Keyboard.release(_command[CLOCKWISE]);
+      break;
+
+    case CNTR_CLOCKWISE:
+      Keyboard.press(_command[CNTR_CLOCKWISE]);
+      Keyboard.release(_command[CNTR_CLOCKWISE]);
+      break;
+
+  }
 
 }
 
+/// @brief Writes the command if encoder hits a pulse in a certain direction
+/// @param enc Encoder from the Encoder.h library
 void RotaryEncoder::EncoderActivate(Encoder& enc){
 
   if(this->Clockwise(enc)){
@@ -54,26 +94,8 @@ void RotaryEncoder::EncoderActivate(Encoder& enc){
 
 }
 
-const void RotaryEncoder::EncoderWrite(int direction){
-
-  switch(direction){
-
-    case CLOCKWISE:
-      Keyboard.press(_command[CLOCKWISE]);
-      Keyboard.release(_command[CLOCKWISE]);
-      Serial.println(_command[CLOCKWISE]);
-      break;
-
-    case CNTR_CLOCKWISE:
-      Keyboard.press(_command[CNTR_CLOCKWISE]);
-      Keyboard.release(_command[CNTR_CLOCKWISE]);
-      Serial.println(_command[CNTR_CLOCKWISE]);
-      break;
-
-  }
-
-}
-
+/// @brief Detects if the switch on the encoder is engaged
+/// @return If the encoder is engaged
 bool RotaryEncoder::IsPressed(){
 
   if(digitalRead(_switchPin) == LOW){
@@ -84,6 +106,15 @@ bool RotaryEncoder::IsPressed(){
 
 }
 
+/**
+ * @brief Detect if the position of the encoder is on another notch in the clockwise direction
+ * 
+ * Note* the encoder updates 4 times before settling into the mechanical notch hence why we have >= 4 & <= -4
+ * 
+ * @param enc Encoder from the Encoder.h library 
+ * @return true 
+ * @return false 
+ */
 bool RotaryEncoder::Clockwise(Encoder& enc){
 
   if(_newPosition >= 4){
@@ -95,6 +126,15 @@ bool RotaryEncoder::Clockwise(Encoder& enc){
 
 }
 
+/**
+ * @brief Detect if the position of the encoder is on another notch in the counter clockwise direction
+ * 
+ * Note* the encoder updates 4 times before settling into the mechanical notch hence why we have >= 4 & <= -4
+ * 
+ * @param enc Encoder from the Encoder.h library 
+ * @return true 
+ * @return false 
+ */
 bool RotaryEncoder::CntrClockwise(Encoder& enc){
 
   if(_newPosition <= -4){
@@ -106,15 +146,8 @@ bool RotaryEncoder::CntrClockwise(Encoder& enc){
 
 }
 
-void RotaryEncoder::ResetPos(Encoder& enc){
-
-  enc.write(0);
-  _newPosition = 0;
-  _oldPosition = 0;
-
-
-}
-
+/// @brief Function for testing
+/// @param enc Encoder from the Encoder.h library 
 void RotaryEncoder::Test(Encoder& enc){
 
   this->EncoderRead(enc);
