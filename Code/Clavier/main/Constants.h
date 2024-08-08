@@ -1,3 +1,4 @@
+#include "keylayouts.h"
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
@@ -46,7 +47,7 @@ constexpr int ANALOG_PINS[12] = {  A0, A1, A2,
 
 constexpr int MACROS[MAX_ANALOG_KEYBOARD_SIZE][MAX_MACRO_SIZE] = { {MODIFIERKEY_CTRL, KEY_C, 0, 0, 0, 0},
                                                                     {MODIFIERKEY_CTRL, KEY_V, 0, 0, 0, 0},
-                                                                    {0},
+                                                                    {KEY_DOWN_ARROW, 0, 0, 0, 0, 0},
                                                                     {0},
                                                                     {0},
                                                                     {0},
