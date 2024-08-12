@@ -147,8 +147,8 @@ void AnalogKey::KeyRelease(){
 void AnalogKey::Test(){
 
   //Serial.println(analogRead(_pin));
-  this->KeyRead();
-  Serial.println(key.GetValue());
+  //this->KeyRead();
+  //Serial.println(key.GetValue());
 
 
 }

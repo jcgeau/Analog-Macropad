@@ -37,6 +37,7 @@ class RotaryEncoder {
     void SetCommand(const int (&command)[DIRECTIONS]);
     void SetSwitch(int sw);
     void ResetPos(Encoder& enc);
+    void SetPins(int sw);
 
 
     /// Reading inputs 

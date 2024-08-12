@@ -34,7 +34,8 @@ class AnalogKey {
 
     public:
 
-    AnalogKey(int port);
+    AnalogKey(){};
+    AnalogKey(int pin);
     ~AnalogKey();
 
     /// Getters 

@@ -68,10 +68,6 @@ class Screen {
     enum Options _option{OPTION1};
     ST7735_t3 _tft = ST7735_t3(SCREEN_CS, SCREEN_DC, MOSI, SCK, SCREEN_RST);
 
-    
-    
-
 };
-
 
 #endif
