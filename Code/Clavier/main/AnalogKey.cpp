@@ -1,6 +1,14 @@
+/**
+ * @file AnalogKey.cpp
+ * @author Jean-Christophe Gauthier (jean-christophe.gauthier@polymtl.ca)
+ * @brief Implementation of the AnalogKey class
+ * @version 0.1
+ * @date 2024-08-08
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include "AnalogKey.h"
-
-AnalogKey::AnalogKey() {}
 
 AnalogKey::AnalogKey(int pin) : _pin(pin){
 
@@ -9,6 +17,17 @@ AnalogKey::AnalogKey(int pin) : _pin(pin){
 }
 
 AnalogKey::~AnalogKey(){
+
+}
+
+const int AnalogKey::GetValue(){
+  return _analogValue;
+
+}
+
+void AnalogKey::SetJoystick(enum JoystickPos direction){
+
+  _direction = direction;
 
 }
 
@@ -21,25 +40,7 @@ void AnalogKey::SetMacro(const int (&macro)[MAX_MACRO_SIZE]) {
 
 }
 
-void AnalogKey::SetJoystick(enum Joystick direction){
-
-  _direction = direction;
-
-}
-
-unsigned int AnalogKey::BuffAvg(){
-
-  auto avg = 0u;
-
-  for( int i =0 ; i<BUFFER_SIZE ; i++){
-    avg += _buffer[i];
-
-  }
-
-  return (avg / BUFFER_SIZE);
-
-}
-
+/// @brief Puts Value of ADC reading in a [0, 255] range into the buffer. The Analog value is the average of the buffer 
 void AnalogKey::KeyRead(){
 
   if(_buffer_i >= BUFFER_SIZE){
@@ -54,28 +55,24 @@ void AnalogKey::KeyRead(){
 
 }
 
-void AnalogKey::KeyPress(){
+/// @brief Finds the average value of the _buffer array
+/// @return The average value of the buffer
+unsigned int AnalogKey::BuffAvg(){
 
-  if(_pressed == 0) {
-    for(auto i = 0; ((_macro[i] != 0) && ( i < MAX_MACRO_SIZE)); i++ ){
-      Keyboard.press(_macro[i]);
-    }
-    _pressed = 1;
+  auto avg = 0u;
+
+  for( int i =0 ; i<BUFFER_SIZE ; i++){
+    avg += _buffer[i];
+
   }
 
-}
-
-void AnalogKey::KeyRelease(){
-
-
-  for(auto i = 0; ((_macro[i] != 0) && ( i < MAX_MACRO_SIZE)); i++ ){
-      Keyboard.release(_macro[i]);
-    }
-  _pressed = 0;
+  return (avg / BUFFER_SIZE);
 
 }
 
-
+/// @brief Finds if a key is pressed i.e. if the position is bellow a specified threshold
+/// @param treshold Height under which a key is activated
+/// @return If the key is pressed(true) or not(false)
 bool AnalogKey::IsPressed( unsigned int treshold){
 
   if(_analogValue < treshold){
@@ -86,6 +83,12 @@ bool AnalogKey::IsPressed( unsigned int treshold){
 
 }
 
+/**
+ * @brief Moves a joystick in the direction specified by the attribute _joystick
+ * 
+ * for more information onthe properties of joystick see: https://www.pjrc.com/teensy/td_joystick.html
+ * 
+ */
 void AnalogKey::MoveJoystick(){
 
   if(_analogValue > _deadzone){
@@ -117,20 +120,33 @@ void AnalogKey::MoveJoystick(){
 
 }
 
+/// @brief Presses the keys found in the _macro array, _pressed is used to not press the value if the key is already held down
+void AnalogKey::KeyPress(){
 
-const int AnalogKey::GetMacro(){
-  return {_macro[0]};
+  if(_pressed == 0) {
+    for(auto i = 0; ((_macro[i] != 0) && ( i < MAX_MACRO_SIZE)); i++ ){
+      Keyboard.press(_macro[i]);
+    }
+    _pressed = 1;
+  }
 
 }
 
-const int AnalogKey::GetValue(){
-  return _analogValue;
+/// @brief Releases the keys found in the _macro array
+void AnalogKey::KeyRelease(){
+
+
+  for(auto i = 0; ((_macro[i] != 0) && ( i < MAX_MACRO_SIZE)); i++ ){
+      Keyboard.release(_macro[i]);
+    }
+  _pressed = 0;
 
 }
 
+/// @brief function to test the behaviour of the key, serial.println() lets us visualise the AnalogValue on a serial plotter 
 void AnalogKey::Test(){
 
-  Serial.println(analogRead(_pin));
+  //Serial.println(analogRead(_pin));
   //this->KeyRead();
   //Serial.println(key.GetValue());
 
