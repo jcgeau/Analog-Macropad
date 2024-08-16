@@ -13,8 +13,10 @@
 
 #include <_Teensy.h>
 #include <Arduino.h>
+#include <string>
 
 #include "Constants.h"
+
 
 /**
  * @brief Represents a direction for the joystick command, NO by default
@@ -44,6 +46,8 @@ class AnalogKey {
     /// Setters 
     void SetJoystick(enum JoystickPos direction);
     void SetMacro(const int (&macro)[MAX_MACRO_SIZE]);
+    void SetMessage(std::string s);
+    void SetButton(int button);
 
     /// Reading the input
     void KeyRead(); 
@@ -53,9 +57,12 @@ class AnalogKey {
     bool IsPressed(unsigned int treshold);
 
     /// Sending command to pc
-    void MoveJoystick();
+    void MoveJoystick(unsigned int deadzone);
     void KeyPress();
     void KeyRelease();
+
+    void KeyPressMacro(int i);
+    void KeyReleaseMacro(int i);
 
     /// Testing
     void Test();
@@ -76,11 +83,15 @@ class AnalogKey {
     /// Boundries of the Sensor output, used to normalise the ADC value to a [0 ,255] range 
     int _max{310};
     int _min{150};
-    
-    unsigned int _deadzone{200};
 
     enum JoystickPos _direction{NO};
+    int _button;
+
+    bool _funkypressed{0};
     bool _pressed{0};
+    std::string _message;
+
+    
 
 
 };

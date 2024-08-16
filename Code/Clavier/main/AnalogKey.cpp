@@ -9,6 +9,7 @@
  * 
  */
 #include "AnalogKey.h"
+#include "Macros.h"
 
 AnalogKey::AnalogKey(int pin) : _pin(pin){
 
@@ -37,6 +38,18 @@ void AnalogKey::SetMacro(const int (&macro)[MAX_MACRO_SIZE]) {
     _macro[i] = macro[i];
     Serial.println(_macro[i]);
   }
+
+}
+
+void AnalogKey::SetMessage(std::string s){
+
+  _message = s;
+
+}
+
+void AnalogKey::SetButton(int button){
+
+  _button = button;
 
 }
 
@@ -89,33 +102,41 @@ bool AnalogKey::IsPressed( unsigned int treshold){
  * for more information onthe properties of joystick see: https://www.pjrc.com/teensy/td_joystick.html
  * 
  */
-void AnalogKey::MoveJoystick(){
+void AnalogKey::MoveJoystick(unsigned int deadzone){
 
-  if(_analogValue > _deadzone){
+
+
+  if(_analogValue < deadzone){
 
   switch (_direction){
     
     case NO:
+
+      if((_analogValue < 160)){
+        Joystick.button(_button, 1);
+      }else{
+        Joystick.button(_button, 0);
+      }
+
       break;
 
     case Y_UPPER:
-      Joystick.Y(map(_analogValue, 0, 255, 512, 1023));
+      Joystick.Y(map(_analogValue, 0, deadzone, 0, 512));
       break;
 
     case Y_LOWER:
-      Joystick.Y(map(_analogValue, 0, 255, 0, 512));
+      Joystick.Y(map(_analogValue, deadzone, 0, 512, 1023));
       break;
 
     case X_RIGHT:
-      Joystick.X(map(_analogValue, 0, 255, 512, 1023));
+      Joystick.X(map(_analogValue, deadzone, 0, 512, 1023));
       break;
 
     case X_LEFT:
-      Joystick.X(map(_analogValue, 0, 255, 0, 512));
+      Joystick.X(map(_analogValue, 0, deadzone, 0, 512));
       break;
 
   }
-
   }
 
 }
@@ -139,6 +160,22 @@ void AnalogKey::KeyRelease(){
   for(auto i = 0; ((_macro[i] != 0) && ( i < MAX_MACRO_SIZE)); i++ ){
       Keyboard.release(_macro[i]);
     }
+  _pressed = 0;
+
+}
+
+void AnalogKey::KeyPressMacro(int i){
+
+  if(_pressed == 0) {
+    doMacro(i);
+    _pressed = 1;
+  }
+
+}
+
+/// @brief Releases the keys found in the _macro array
+void AnalogKey::KeyReleaseMacro(int i){
+
   _pressed = 0;
 
 }

@@ -10,6 +10,7 @@
  */
 #include "AnalogKeyboard.h"
 
+
 Encoder ENCODERS[MAX_ENCODER_SIZE]{Encoder(2,1), Encoder(5,4)};
 
 AnalogKeyboard::AnalogKeyboard(int dimensions = 0): _dim(dimensions){
@@ -17,6 +18,7 @@ AnalogKeyboard::AnalogKeyboard(int dimensions = 0): _dim(dimensions){
   for(auto i{0}; i < dimensions; i++){
     _key[i] = AnalogKey(ANALOG_PINS[i]);
     _key[i].SetMacro(MACROS[i]);
+    _key[i].SetButton(i);
   }
 
   for(auto i{0}; i < MAX_ENCODER_SIZE; i++ ){
@@ -37,7 +39,22 @@ void AnalogKeyboard::Run(){
   
  // Read de tous les touches et encodeurs 
   this->KeyboardRead();
-  this->KeyboardPress();
+
+  switch(_mode){
+
+    case MODE1:
+      this->KeyboardPress();
+      break;
+
+    case MODE2:
+      this->MoveJoystick();
+      break;
+
+    case MODE3:
+      this->KeyboardPressMacro();
+      break;
+
+  }
 
  // Menus
   this->Menu();
@@ -191,7 +208,7 @@ void AnalogKeyboard::ChooseModeMenu(){
 
   if(this->GetState() == CHOOSE_MODE){
 
-    _screen.Options("Choose Mode", "Mode1", "Mode1", "Mode1", RED);
+    _screen.Options("Choose Mode", "Normal", "Gaming", "Funky", RED);
     delay(MENU_DELAY);
 
     while(this->GetState() == CHOOSE_MODE){
@@ -200,12 +217,12 @@ void AnalogKeyboard::ChooseModeMenu(){
 
     if(_encoder[0].Clockwise(ENCODERS[0])){
       _screen.OptionUp();
-      _screen.Options("Choose Mode", "Mode1", "Mode1", "Mode1", RED);
+      _screen.Options("Choose Mode", "Normal", "Gaming", "Funky", RED);
     }
 
     if(_encoder[0].CntrClockwise(ENCODERS[0])){
       _screen.OptionDown();
-      _screen.Options("Choose Mode", "Mode1", "Mode1", "Mode1", RED);
+      _screen.Options("Choose Mode", "Normal", "Gaming", "Funky", RED);
     }
 
     this->MenuMode();
@@ -370,7 +387,25 @@ void AnalogKeyboard::KeyboardPress(){
 void AnalogKeyboard::MoveJoystick(){
 
   for(auto i{0} ; i < _dim; i++){
-    _key[i].MoveJoystick();
+    _key[i].MoveJoystick(_deadzone);
   }
  
+}
+
+void AnalogKeyboard::KeyboardPressMacro(){
+  
+  for(auto i{0} ; i < _dim; i++){
+
+    if(_key[i].IsPressed(_threshold)){
+      _key[i].KeyPressMacro(i);
+    }else {
+      _key[i].KeyReleaseMacro(i);
+    }
+
+  }
+
+  for(auto i{0}; i < MAX_ENCODER_SIZE; i++){
+    _encoder[i].EncoderActivate(ENCODERS[i]);
+  }
+
 }

@@ -89,6 +89,8 @@ class AnalogKeyboard {
     void KeyboardRead();
     void KeyboardPress();
 
+    void KeyboardPressMacro();
+
 
     private:
     

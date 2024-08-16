@@ -10,16 +10,18 @@
  */
 #include "Constants.h"
 #include "AnalogKeyboard.h"
-#include "Screen.h"
-#include "RotaryEncoder.h"
-#include "AnalogKey.h"
+
+
 
 AnalogKeyboard clavier(11);
 
 void setup() {
 
   Serial.begin(38400);
-  clavier.Run();
+  clavier.SetJoystick(0, 1, 9, 3);
+  Joystick.Z(512);
+  Joystick.Zrotate(512);
+  Mouse.screenSize(1920, 1080);
 
 }
 
